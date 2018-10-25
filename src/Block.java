@@ -30,14 +30,14 @@ public class Block
     {
 
     }
-    public void removeElement(int elementId)
+    public int removeElement(int elementId)
     {
-    //    elements.add(new Element());
-    //    return elements.size()-1;
+        elements.add(new Element(Main.getDay()));
+        return elements.size()-1;
     }
     public void upgradeElement(int elementId)
     {
-
+        elements.get(elementId).levelUp();
     }
     public int getDefenceId()
     {
