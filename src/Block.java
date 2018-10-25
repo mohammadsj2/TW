@@ -68,13 +68,27 @@ public class Block
     }
     public int AddElement(Element element)// age nmishod -1 mide
     {
+        int buildCost;
+        if(element instanceof Home)
+        {
+            buildCost=element.getBuildCost(((Home) element).getNumberOfFloors(),((Home) element).getNumberOfUnits();
+        }
+        else
+        {
+            buildCost=element.getBuildCost();
+        }
+        if(buildCost>Main.getCity().getMoney())
+        {
+            return -1;
+        }
         elements.add(element);
+        if(elements.size()>numberOfMaxElements())return -1;
         int id=elements.size()-1;
         if(element instanceof Defence)
         {
             defenceId=id;
         }
-        return id;
+        return buildCost;
     }
     public int removeElement(int elementId)// age ghbln remove shode bod -1 vgrna 1
     {
@@ -91,6 +105,12 @@ public class Block
     public int getDefenceId()
     {
         return defenceId;
+    }
+    public int upgrade()// age az 3 bishtr shod -1 vrgna 1
+    {
+        level++;
+        if(level>3)return -1;
+        return 1;
     }
 
 }
