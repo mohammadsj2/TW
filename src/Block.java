@@ -131,5 +131,10 @@ public class Block
         }
         return 1;
     }
+    public int upgradeMoney()
+    {
+        if(level==1)return 500;
+        return 500*500;
+    }
 
 }
