@@ -2,7 +2,8 @@ public class Bazaar extends Element {
     Bazaar() {
         super();
     }
-    static {
+
+    {
         CONST_COEFF = 5;
         BUILD_COST = 6000;
         REMOVE_COST = 500;

@@ -7,26 +7,27 @@ public class Element {
     static int REMOVE_COST = 0;
     static int UPGRADE_COST = 0;
 
-    static int NEEDED_UNITS = 0;
-    static int NEEDED_UNITS_STEP = 0;
-
-    static int getConstCoeff() { return CONST_COEFF; }
-    static int getBuildCost() { return BUILD_COST; }
-    static int getRemoveCost() { return REMOVE_COST; }
-    public int getUpgradeCost() { return UPGRADE_COST; }
-    static int getLevelLimit() { return LEVEL_LIMIT; }
+    public int NEEDED_UNITS = 0;
+    public int NEEDED_UNITS_STEP = 0;
+    public int getConstCoeff() { return CONST_COEFF; }
+    public int getBuildCost() {  return BUILD_COST; }
+    public int getRemoveCost() {  return REMOVE_COST; }
+    public int getUpgradeCost() {  return UPGRADE_COST; }
+    public int getLevelLimit() {  return LEVEL_LIMIT; }
+    public int getNeededUnits() { return 0;}
+    public int getNeededUnitsStep() { return 0;}
     Element() {
-        this.setIncome(0);
         this.setLevel(1);
         this.dayBuilt = Main.getDay();
     }
     public void setIncome(int newIncome) {
         this.income = newIncome;
     }
-    public int getIncome() { return this.income; }
+    public int getIncome() { return this.numberOfPeople() * 100 + this.income; }
     public int setLevel(int newLevel) {
         if (newLevel >= 1 && newLevel <= getLevelLimit()) {
-            this.income = newLevel;
+            this.level = newLevel;
+
             return 0;
         } else {
             // error
@@ -45,8 +46,9 @@ public class Element {
     }
     public double score(double aCoeff) { return 0; }
 
+
     public void updateIncome() {
-        setIncome(getIncome() + numberOfPeople() * 100);
+        setIncome(getIncome());
     }
     public int numberOfPeople() {
         return NEEDED_UNITS_STEP * (this.getLevel() - 1) + NEEDED_UNITS;
