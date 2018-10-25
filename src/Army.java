@@ -2,7 +2,8 @@ public class Army extends Element {
     Army() {
         super();
     }
-    static {
+  //  @Override
+  {
         CONST_COEFF = 10;
         BUILD_COST = 15000;
         UPGRADE_COST = 20000;

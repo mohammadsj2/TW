@@ -55,12 +55,12 @@ public class Main {
             String line = scanner.nextLine();
             String[] queries = line.split(" ");
             for (int j = 0; j < (int) queries.length; ++j) {
-                if (queries[j].matches("[a-zA-z]+")) {
+                if (queries[j].matches("[a-zA-Z]+")) {
                     queries[j] = queries[j].toLowerCase();
                 }
             }
             if (queries[0].equals("yield")) {
-                System.out.format("%2.f %2.f", player[0].getScore(), player[1].getScore());
+                System.out.format("%.2f %.2f", player[0].getScore(), player[1].getScore());
                 return;
             }
             if (queries[0].equals("done")) {
@@ -103,13 +103,13 @@ public class Main {
                     int blockId = Integer.parseInt(queries[2]);
                     --blockId;
                     if (queries[1].equals("bazaar")) {
-                        int use = Bazaar.getBuildCost();
+                        int use = (new Bazaar()).getBuildCost();
                         check(use > player[getTurn()].getMoney() ? -1 : player[getTurn()].addElement(blockId, (Element) new Bazaar()), 1);
                     } else if (queries[1].equals("army")) {
-                        int use = Bazaar.getBuildCost();
+                        int use = (new Army()).getBuildCost();
                         check(use > player[getTurn()].getMoney() ? -1 : player[getTurn()].addElement(blockId, (Element) new Army()), 1);
                     } else if (queries[1].equals("defense")) {
-                        int use = Defence.getBuildCost();
+                        int use = (new Defence).getBuildCost();
                         check(use > player[getTurn()].getMoney() ? -1 : player[getTurn()].addElement(blockId, (Element) new Defence()), 1);
                     }
                 }

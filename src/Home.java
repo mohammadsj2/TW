@@ -7,10 +7,11 @@ public class Home extends Element {
     public final double CONST_UNIT = 2;
     public final double CONST_FLOOR = 3;
     public final double CONST_HOME = 10;
-    static {
+ //   @Override
+    {
         CONST_COEFF = 10;
-
     }
+
     static int getBuildCost(int floors, int units) {
         return units * 100 + floors * 300 + 700;
     }
