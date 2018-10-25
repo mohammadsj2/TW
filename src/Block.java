@@ -10,36 +10,36 @@ public class Block
         level=1;
         defenceId=-1;
     }
-    int numberOfMaxElements()
+    public int numberOfMaxElements()
     {
         return INITIAL_MAX_ELEMENTS+(level-1)*UPGRADE_MAX_ELEMENTS;
     }
-    int getIncome()
+    public int getIncome()
     {
         return 0;
     }
-    int getScoreOfPerson()
+    public int getScoreOfPerson()
     {
         return 0;
     }
-    int numberOfUnusedPeople()
+    public int numberOfUnusedPeople()
     {
         return 0;
     }
-    void AddElement(Element element)
+    public void AddElement(Element element)
     {
 
     }
-    void removeElement(int elementId)
+    public void removeElement(int elementId)
     {
     //    elements.add(new Element());
     //    return elements.size()-1;
     }
-    void upgradeElement(int elementId)
+    public void upgradeElement(int elementId)
     {
 
     }
-    int getDefenceId()
+    public int getDefenceId()
     {
         return defenceId;
     }
