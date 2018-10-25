@@ -76,11 +76,12 @@ public class Block
         }
         return id;
     }
-    public void removeElement(int elementId)
+    public int removeElement(int elementId)// age ghbln remove shode bod -1 vgrna 1
     {
+        if(elementId>=elements.size() || elements.get(elementId)==null)return -1;
         elements.set(elementId, null);
         if(elementId==defenceId)defenceId=-1;
-        return ;
+        return 1;
     }
     public void upgradeElement(int elementId)
     {
