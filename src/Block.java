@@ -109,7 +109,7 @@ public class Block
     public int upgrade()// age az 3 bishtr shod -1 vrgna 1
     {
         level++;
-        if(level>3)return -1;
+        if(level>3) return -1;
         return 1;
     }
 

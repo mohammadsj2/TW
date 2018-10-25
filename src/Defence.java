@@ -2,7 +2,8 @@ public class Defence extends Element {
     Defence() {
         super();
     }
-    static {
+   // @Override
+    {
         LEVEL_LIMIT = 5;
         CONST_COEFF = 15;
         BUILD_COST = 10000;
