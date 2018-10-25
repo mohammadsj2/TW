@@ -14,6 +14,16 @@ public class Block
     {
         return INITIAL_MAX_ELEMENTS+(level-1)*UPGRADE_MAX_ELEMENTS;
     }
+    public int numberOfElements()
+    {
+        int cntElement=0;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
+            cntElement++;
+        }
+        return cntElement;
+    }
     public int getIncome()
     {
         int income=0;
@@ -31,7 +41,7 @@ public class Block
         {
             if(element==null)continue;
             if(element instanceof Home)
-                score+=element.score(getScoreOfPerson());
+                score+=((Home) element).score(getScoreOfPerson());
             else
                 score+=element.score();
 
@@ -57,7 +67,7 @@ public class Block
 
             if(element instanceof Home)
             {
-                unusedPeople+=element.numberOfPeople();
+                unusedPeople+=((Home) element).numberOfPeople();
             }
             else
             {
@@ -66,12 +76,12 @@ public class Block
         }
         return unusedPeople;
     }
-    public int AddElement(Element element)// age nmishod -1 mide
+    public int addElement(Element element)// age nmishod -1 mide
     {
         int buildCost;
         if(element instanceof Home)
         {
-            buildCost=element.getBuildCost(((Home) element).getNumberOfFloors(),((Home) element).getNumberOfUnits();
+            buildCost=((Home) element).getBuildCost(((Home) element).getNumberOfFloors(),((Home) element).getNumberOfUnits());
         }
         else
         {
@@ -90,11 +100,16 @@ public class Block
         }
         return buildCost;
     }
-    public int removeElement(int elementId)// age ghbln remove shode bod -1 vgrna 1
+    public int removeElement(int elementId)// age ghbln remove shode bod -1 age army bod 2 vgrna 1
     {
         if(elementId>=elements.size() || elements.get(elementId)==null)return -1;
-        elements.set(elementId, null);
         if(elementId==defenceId)defenceId=-1;
+        if(elements.get(elementId) instanceof Army)
+        {
+            elements.set(elementId,null);
+            return 2;
+        }
+        elements.set(elementId, null);
         return 1;
     }
     public void upgradeElement(int elementId)
@@ -109,7 +124,11 @@ public class Block
     public int upgrade()// age az 3 bishtr shod -1 vrgna 1
     {
         level++;
-        if(level>3)return -1;
+        if(level>3)
+        {
+            level=3;
+            return -1;
+        }
         return 1;
     }
 
