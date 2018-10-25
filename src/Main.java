@@ -16,11 +16,15 @@ public class Main {
     {
        return (day%2);
     }
+    public static City getCity()
+    {
+        return player[getTurn()];
+    }
     public void attack(City city,Block block)
     {
 
     }
-    public void loot(City city,Block block)
+    public int loot(City city,Block block)
     {
 
     }
