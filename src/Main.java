@@ -22,11 +22,11 @@ public class Main {
     {
         return player[getTurn()];
     }
-    public int attack(int blockId)// age nmishod -1 mide vgrna 1
+    public static int attack(int blockId)// age nmishod -1 mide vgrna 1
     {
         return 1;
     }
-    public int loot(int blockId)// age nmishod -1 mide vgrna 1
+    public static int loot(int blockId)// age nmishod -1 mide vgrna 1
     {
         City myCity=player[getTurn()],enemyCity=player[1-getTurn()];
         if(enemyCity.getBlock(blockId)==null || enemyCity.getBlock(blockId).getDefenceId()!=-1)return -1;
@@ -37,7 +37,7 @@ public class Main {
     {
 
     }
-    public void endDay()
+    public static void endDay()
     {
 
         for(int i=0;i<2;i++) {
@@ -76,13 +76,13 @@ public class Main {
                 if (player[getTurn()].getMoney() < 5000) {
                     check(-1, 0);
                 } else {
-                    check(attack(player[getTurn() ^ 1], Integer.parseInt(queries[1])), 0);
+                    check(attack(Integer.parseInt(queries[1])), 0);
                 }
                 continue;
             }
             if (queries[0].equals("loot")) {
 
-                check(loot(player[getTurn() ^ 1], Integer.parseInt(queries[1])), 0);
+                check(loot(Integer.parseInt(queries[1])), 0);
                 continue;
             }
             if (queries[0].equals("see")) {
@@ -114,7 +114,7 @@ public class Main {
                         int use = (new Army()).getBuildCost();
                         check(use > player[getTurn()].getMoney() ? -1 : player[getTurn()].addElement(blockId, (Element) new Army()), 1);
                     } else if (queries[1].equals("defense")) {
-                        int use = (new Defence).getBuildCost();
+                        int use = (new Defence()).getBuildCost();
                         check(use > player[getTurn()].getMoney() ? -1 : player[getTurn()].addElement(blockId, (Element) new Defence()), 1);
                     }
                 }
