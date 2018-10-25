@@ -90,7 +90,7 @@ public class Block
         if(elements.size()>numberOfMaxElements())return -1;
         if(element instanceof Defence)
         {
-            defenceId=id;
+            defenceId= elements.size()-1;
         }
         Main.getCity().subtractMoney(buildCost);
         return 1;
