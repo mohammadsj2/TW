@@ -16,17 +16,17 @@ public class Element {
     public int getUpgradeCost() { return UPGRADE_COST; }
     static int getLevelLimit() { return LEVEL_LIMIT; }
     Element() {
-        this.setIncome(0);
         this.setLevel(1);
         this.dayBuilt = Main.getDay();
     }
     public void setIncome(int newIncome) {
         this.income = newIncome;
     }
-    public int getIncome() { return this.income; }
+    public int getIncome() { return this.numberOfPeople() * 100 + this.income; }
     public int setLevel(int newLevel) {
         if (newLevel >= 1 && newLevel <= getLevelLimit()) {
-            this.income = newLevel;
+            this.level = newLevel;
+
             return 0;
         } else {
             // error
@@ -46,7 +46,7 @@ public class Element {
     public double score(double aCoeff) { return 0; }
 
     public void updateIncome() {
-        setIncome(getIncome() + numberOfPeople() * 100);
+        setIncome(getIncome());
     }
     public int numberOfPeople() {
         return NEEDED_UNITS_STEP * (this.getLevel() - 1) + NEEDED_UNITS;

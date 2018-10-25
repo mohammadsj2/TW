@@ -27,7 +27,10 @@ public class Home extends Element {
             // not possible
         }
     }
-
+    @Override
+    public void updateIncome() {
+        return;
+    }
     public int getNumberOfUnits() { return this.numberOfUnits; }
     public int setNumberOfUnits(int newNumberOfUnits) {
         if (newNumberOfUnits >= 1 && newNumberOfUnits <= 4) {
