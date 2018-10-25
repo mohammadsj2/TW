@@ -20,9 +20,9 @@ public class Main {
     {
         return player[getTurn()];
     }
-    public void attack(int blockId)
+    public int attack(int blockId)// age nmishod -1 mide vgrna 1
     {
-
+        return 1;
     }
     public int loot(int blockId)// age nmishod -1 mide vgrna 1
     {
@@ -33,7 +33,7 @@ public class Main {
     }
     public void yield(City city)
     {
-        
+
     }
     public void endDay()
     {
