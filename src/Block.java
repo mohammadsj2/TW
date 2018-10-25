@@ -16,32 +16,101 @@ public class Block
     }
     public int getIncome()
     {
+        int income=0;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
+            income+=element.getIncome();
+        }
         return 0;
     }
-    public int getScoreOfPerson()
+    public double getScore()
     {
-        return 0;
+        double score=0;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
+            if(element instanceof Home)
+                score+=element.score(getScoreOfPerson());
+            else
+                score+=element.score();
+
+        }
+        return score;
+    }
+    public double getScoreOfPerson()
+    {
+        double score=1.;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
+            score*=element.getScoreOfPerson();
+        }
+        return score;
     }
     public int numberOfUnusedPeople()
     {
-        return 0;
-    }
-    public void AddElement(Element element)
-    {
+        int unusedPeople=0;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
 
+            if(element instanceof Home)
+            {
+                unusedPeople+=element.numberOfPeople();
+            }
+            else
+            {
+                unusedPeople+=element.numberOfPeople();
+            }
+        }
+        return unusedPeople;
     }
-    public void removeElement(int elementId)
+    public int AddElement(Element element)// age nmishod -1 mide
     {
-    //    elements.add(new Element());
-    //    return elements.size()-1;
+        int buildCost;
+        if(element instanceof Home)
+        {
+            buildCost=element.getBuildCost(((Home) element).getNumberOfFloors(),((Home) element).getNumberOfUnits();
+        }
+        else
+        {
+            buildCost=element.getBuildCost();
+        }
+        if(buildCost>Main.getCity().getMoney())
+        {
+            return -1;
+        }
+        elements.add(element);
+        if(elements.size()>numberOfMaxElements())return -1;
+        int id=elements.size()-1;
+        if(element instanceof Defence)
+        {
+            defenceId=id;
+        }
+        return buildCost;
+    }
+    public int removeElement(int elementId)// age ghbln remove shode bod -1 vgrna 1
+    {
+        if(elementId>=elements.size() || elements.get(elementId)==null)return -1;
+        elements.set(elementId, null);
+        if(elementId==defenceId)defenceId=-1;
+        return 1;
     }
     public void upgradeElement(int elementId)
     {
-
+        elements.get(elementId).levelUp();
+        return ;
     }
     public int getDefenceId()
     {
         return defenceId;
+    }
+    public int upgrade()// age az 3 bishtr shod -1 vrgna 1
+    {
+        level++;
+        if(level>3)return -1;
+        return 1;
     }
 
 }
