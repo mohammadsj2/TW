@@ -16,28 +16,76 @@ public class Block
     }
     public int getIncome()
     {
+        int income=0;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
+            income+=element.getIncome();
+        }
         return 0;
     }
-    public int getScoreOfPerson()
+    public double getScore()
     {
-        return 0;
+        double score=0;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
+            if(element instanceof Home)
+                score+=element.score(getScoreOfPerson());
+            else
+                score+=element.score();
+
+        }
+        return score;
+    }
+    public double getScoreOfPerson()
+    {
+        double score=1.;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
+            score*=element.getScoreOfPerson();
+        }
+        return score;
     }
     public int numberOfUnusedPeople()
     {
-        return 0;
-    }
-    public void AddElement(Element element)
-    {
+        int unusedPeople=0;
+        for(Element element:elements)
+        {
+            if(element==null)continue;
 
+            if(element instanceof Home)
+            {
+                unusedPeople+=element.numberOfPeople();
+            }
+            else
+            {
+                unusedPeople+=element.numberOfPeople();
+            }
+        }
+        return unusedPeople;
     }
-    public int removeElement(int elementId)
+    public int AddElement(Element element)// age nmishod -1 mide
     {
-        elements.add(new Element(Main.getDay()));
-        return elements.size()-1;
+        elements.add(element);
+        int id=elements.size()-1;
+        if(element instanceof Defence)
+        {
+            defenceId=id;
+        }
+        return id;
+    }
+    public void removeElement(int elementId)
+    {
+        elements.set(elementId, null);
+        if(elementId==defenceId)defenceId=-1;
+        return ;
     }
     public void upgradeElement(int elementId)
     {
         elements.get(elementId).levelUp();
+        return ;
     }
     public int getDefenceId()
     {
