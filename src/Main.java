@@ -1,6 +1,7 @@
 import java.util.Scanner;
 public class Main {
-    static City[] player;
+    private static City[] player;
+
     {
         player=new City[2];
         player[0]=City.city1;
@@ -12,7 +13,8 @@ public class Main {
     {
         return day;
     }
-    static int getTurn()
+    public static int getTurn()
+
     {
        return (day%2);
     }
@@ -20,13 +22,16 @@ public class Main {
     {
         return player[getTurn()];
     }
-    public void attack(City city,Block block)
+    public int attack(int blockId)// age nmishod -1 mide vgrna 1
     {
-
+        return 1;
     }
-    public int loot(City city,Block block)
+    public int loot(int blockId)// age nmishod -1 mide vgrna 1
     {
-
+        City myCity=player[getTurn()],enemyCity=player[1-getTurn()];
+        if(enemyCity.getBlock(blockId)==null || enemyCity.getBlock(blockId).getDefenceId()!=-1)return -1;
+        myCity.addMoney(enemyCity.getBlock(blockId).numberOfElements()*500);
+        return 1;
     }
     public void yield(City city)
     {
