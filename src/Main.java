@@ -27,6 +27,9 @@ public class Main {
     public void endDay()
     {
 
+        for(int i=0;i<2;i++) {
+            player[i].updateMoney();
+        }
     }
     public static void main()
     {

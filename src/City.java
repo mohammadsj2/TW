@@ -20,6 +20,7 @@ public enum City {
 
     }
     public int getMoney(){
-
+        updateMoney();
+        return money;
     }
 }
