@@ -1,17 +1,18 @@
 import java.util.ArrayList;
-/*
-    remove block mikoni income oon moshkel pish nemiare
- */
 
 
-public enum City {
+
+enum City {
     city1,city2;
     public static final int INIT_BLOCK_COST = 1000;
     public static final int REMOVE_BLOCK_COST = 500;
+    public static final int INIT_MONEY= 30*1000;
     private Block armyBlock=null;
-    private ArrayList<Block> blocks;
+    private ArrayList<Block> blocks = new ArrayList<Block>();
     private int money=0;
-
+    {
+        money = INIT_MONEY;
+    }
     public Block getArmyBlock(){
         return armyBlock;
     }
@@ -19,17 +20,21 @@ public enum City {
         if(blockId>=blocks.size())return null;
         return blocks.get(blockId);
     }
-    public double getScore(){
+    public double getScore(boolean nowCity){
         double sum=0.0;
         for(int i=0;i<blocks.size();i++){
-            sum+=blocks.get(i).getScore();
+            if (blocks.get(i) != null) {
+                double tmp = blocks.get(i).getScore(nowCity);
+                sum += tmp;
+            }
         }
         return sum;
     }
     public void updateMoney(){
         for(int i=0;i<blocks.size();i++){
             Block x=blocks.get(i);
-            money+=x.getIncome();
+            if (x != null)
+                money+=x.getIncome();
         }
     }
     public void addMoney(int val){
@@ -74,7 +79,8 @@ public enum City {
     }
     public int addElement(int blockId,Element element){ //IMPOSSIBLE == -1
         Block block=blocks.get(blockId);
-        if(block==null)return -1;
+
+        if(block==null)return -1;;
         if(element instanceof Army){
             if(armyBlock!=null)return -1;
         }
@@ -96,12 +102,12 @@ public enum City {
         return 1;
     }
 
-    public int upgradeElement(int blockId,int elementId){
+    public int upgradeElement(int blockId,int elementId, int floor, int unit){
         Block block=getBlock(blockId);
         if(block==null){
             return -1;
         }
-        return block.upgradeElement(elementId); // saberi upgrade elementesh age element id nabood -1 bede
+        return block.upgradeElement(elementId, floor, unit); // saberi upgrade elementesh age element id nabood -1 bede
     }
     public int getMoney(){
         return money;
