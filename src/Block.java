@@ -1,18 +1,28 @@
 import java.util.ArrayList;
 
-public class Block
-{
+class Block {
     private final int INITIAL_MAX_ELEMENTS=15,UPGRADE_MAX_ELEMENTS=5;
-    private ArrayList<Element> elements;
+    private ArrayList<Element> elements = new ArrayList<Element>();
     private int level,defenceId;
     Block()
     {
         level=1;
         defenceId=-1;
     }
+    public ArrayList<Element> getElements() {
+        return this.elements;
+    }
     public int numberOfMaxElements()
     {
         return INITIAL_MAX_ELEMENTS+(level-1)*UPGRADE_MAX_ELEMENTS;
+    }
+    public Army getArmy() {
+        for (Element element : elements) {
+            if (element != null && element instanceof Army) {
+                return (Army) element;
+            }
+        }
+        return null;
     }
     public int numberOfElements()
     {
@@ -22,6 +32,7 @@ public class Block
             if(element==null)continue;
             cntElement++;
         }
+
         return cntElement;
     }
     public int getIncome()
@@ -30,21 +41,30 @@ public class Block
         for(Element element:elements)
         {
             if(element==null)continue;
-            income+=element.getIncome();
+            if (element instanceof Home) {
+                income += element.numberOfPeople() * 100;
+            } else {
+                income += element.getIncome();
+            }
         }
-        return 0;
+        return income;
     }
-    public double getScore()
+    public double getScore(boolean nowCity)
     {
         double score=0;
         for(Element element:elements)
         {
             if(element==null)continue;
-            if(element instanceof Home)
-                score+=((Home) element).score(getScoreOfPerson());
-            else
-                score+=element.score();
-
+            if(element instanceof Home) {
+                double tmp=((Home) element).score(getScoreOfPerson());
+                //   System.out.println("HOME "+tmp);
+                score += tmp;
+            }
+            else {
+                double tmp=element.score(nowCity);
+                //   System.out.println("GOOGOOL "+tmp);
+                score += tmp;
+            }
         }
         return score;
     }
@@ -71,7 +91,7 @@ public class Block
             }
             else
             {
-                unusedPeople+=element.numberOfPeople();
+                unusedPeople-=element.numberOfPeople();
             }
         }
         return unusedPeople;
@@ -86,14 +106,24 @@ public class Block
         {
             return -1;
         }
+        if(element instanceof Defence && defenceId!=-1)
+        {
+            return -1;
+        }
+        if(elements.size()+1>numberOfMaxElements())return -1;
+        {
+            int unused = numberOfUnusedPeople() + ((element instanceof Home) ? element.numberOfPeople() : -element.numberOfPeople());
+            if (unused < 0) {
+                return -1;
+            }
+        }
         elements.add(element);
-        if(elements.size()>numberOfMaxElements())return -1;
         if(element instanceof Defence)
         {
             defenceId= elements.size()-1;
         }
         Main.getCity().subtractMoney(buildCost);
-        return 1;
+        return elements.size();
     }
     public int removeElement(int elementId)// age ghbln remove shode bod -1 age army bod 2 vgrna 1
     {
@@ -120,11 +150,15 @@ public class Block
         elements.set(elementId, null);
         return returnValue;
     }
-    public int upgradeElement(int elementId)
+    public int upgradeElement(int elementId, int floor, int unit)
     {
         if(elementId>=elements.size() || elements.get(elementId)==null)return -1;
         Element element=elements.get(elementId);
+
         int upgradeCost=element.getUpgradeCost();
+        if (element instanceof Home) {
+            upgradeCost = ((Home) element).getUpgradeCost(floor, unit);
+        }
         if(upgradeCost>=0)
         {
             if(Main.getCity().subtractMoney(upgradeCost)==-1)
@@ -134,12 +168,17 @@ public class Block
         {
             Main.getCity().addMoney(-upgradeCost);
         }
-        elements.get(elementId).levelUp();
+        if (element instanceof Home) {
+            if (((Home) element).levelUp(floor, unit) == -1) return -1;
+        } else {
+            if (elements.get(elementId).levelUp() == -1) return -1;
+        }
         return 1;
     }
     public int getDefenceId()
     {
-        return defenceId;
+        if(defenceId==-1)return -1;
+        return defenceId+1;
     }
     public int upgrade()// age az 3 bishtr shod -1 vrgna 1
     {

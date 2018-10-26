@@ -1,9 +1,11 @@
-public class Defence extends Element {
+class Defence extends Element {
+    @Override
+    public int getConstCoeff() {
+        return 15;
+    }
+
     Defence() {
         super();
-    }
-   // @Override
-    {
         LEVEL_LIMIT = 5;
         CONST_COEFF = 15;
         BUILD_COST = 10000;

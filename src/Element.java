@@ -1,4 +1,4 @@
-public class Element {
+class Element {
     private int level, income, blockId;
     private int dayBuilt;
     static int LEVEL_LIMIT = 3;
@@ -17,13 +17,16 @@ public class Element {
     public int getNeededUnits() { return 0;}
     public int getNeededUnitsStep() { return 0;}
     Element() {
+        this.setIncome(0);
         this.setLevel(1);
         this.dayBuilt = Main.getDay();
     }
     public void setIncome(int newIncome) {
         this.income = newIncome;
     }
-    public int getIncome() { return this.numberOfPeople() * 100 + this.income; }
+    public int getIncome() {
+        return this.income;
+    }
     public int setLevel(int newLevel) {
         if (newLevel >= 1 && newLevel <= getLevelLimit()) {
             this.level = newLevel;
@@ -41,14 +44,21 @@ public class Element {
     }
     public int getBlockId() { return this.blockId; }
     public int getDayBuilt() { return this.dayBuilt; }
-    public double score() {
-        return Math.pow(this.getConstCoeff(), Main.getDay() - getDayBuilt());
+    public double score(boolean nowCity) {
+        //   System.out.println(this.getConstCoeff());
+       /* if(this instanceof Defence)
+        {
+            System.out.println("RIDI "+this.getConstCoeff());
+        }*/
+        //   Defence.CONST_COEFF=15;
+        int tmp=(Main.getDay()/2 - getDayBuilt()/2)+1;
+        return Math.pow(this.getConstCoeff(), tmp);
     }
     public double score(double aCoeff) { return 0; }
 
 
     public void updateIncome() {
-        setIncome(getIncome());
+        setIncome(getIncome() + numberOfPeople() * 100);
     }
     public int numberOfPeople() {
         return NEEDED_UNITS_STEP * (this.getLevel() - 1) + NEEDED_UNITS;
